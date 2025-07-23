@@ -21,13 +21,13 @@ API to display a list of popular people (actors, directors, etc.) and allows use
 
 
 lib/
-├── core/ # Shared logic, global utils, networking, etc.
-│ ├── network/ # API service, Dio/interceptors, etc.
-│ ├── utils/ # Constants, formatters, helpers
-│ └── widgets/ # Reusable UI widgets (buttons, cards, etc.)
+├── core/              # Shared logic, global utils, networking, etc.
+│   ├── network/       # API service, Dio/interceptors, etc.
+│   ├── utils/         # Constants, formatters, helpers
+│   └── widgets/       # Reusable UI widgets (buttons, cards, etc.)
 ├── features/
-│ └── people/ # TMDB 'people' feature module
-└── main.dart # App entry point
+│   └── people/        # TMDB 'people' feature module
+└── main.dart          # App entry point
 
 
 ## 📱 Features
