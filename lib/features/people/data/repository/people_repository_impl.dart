@@ -3,13 +3,13 @@ import 'package:axis_assessment/core/networking/api_result.dart';
 
 import 'package:axis_assessment/features/people/data/models/people_model.dart';
 import '../../../../core/networking/api_services.dart';
-import '../../../../core/networking/failure.dart';
-import '../../domain/repository/base_people_repository.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/repository/people_repository.dart';
 
-class PeopleRepository implements BasePeopleRepository {
+class PeopleRepositoryImpl implements PeopleRepository {
   final ApiService _apiService;
 
-  PeopleRepository(this._apiService);
+  PeopleRepositoryImpl(this._apiService);
 
   @override
   Future<ApiResult<PeopleModel>> getPeople(int? pageNum) async {
