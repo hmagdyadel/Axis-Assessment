@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'core/di/dependency_injection.dart';
 import 'features/people/presentations/views/people_view.dart';
 
 
@@ -8,6 +9,7 @@ import 'features/people/presentations/views/people_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  setupGetIt();
   runApp(const MyApp());
 }
 
