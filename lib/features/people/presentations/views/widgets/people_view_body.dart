@@ -1,3 +1,4 @@
+import 'people_item.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/const/constants.dart';
@@ -21,7 +22,8 @@ class PeopleViewBody extends StatelessWidget {
                 SizedBox(height: horizontalPadding),
                 SearchTextField(),
                 SizedBox(height: 12),
-              ],
+                PeopleFeaturedItem()              ],
+
             ),
           ),
         ],
