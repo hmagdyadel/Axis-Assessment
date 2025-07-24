@@ -46,4 +46,5 @@ app.*.map.json
 
 
 # Environment secrets
-.env
+# will remove .env from .gitignore for testing purposes
+#.env
