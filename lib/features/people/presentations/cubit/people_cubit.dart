@@ -11,11 +11,16 @@ class PeopleCubit extends Cubit<PeopleStates> {
 
   PeopleCubit(this._peopleRepository) : super(const PeopleStates.initial());
 
+  // Private state variables
   final List<PersonResult> _peopleResult = [];
   PaginationState _pagination = const PaginationState();
 
+  // Public getters for external access
   bool get hasMorePeople => _pagination.hasMore;
 
+  List<PersonResult> get currentPeople => List.unmodifiable(_peopleResult);
+
+  //isNextPage true for pagination, false for initial/refresh
   Future<void> getPeople({bool isNextPage = false}) async {
     if (_pagination.isLoading || (!hasMorePeople && isNextPage)) return;
 
@@ -26,9 +31,6 @@ class PeopleCubit extends Cubit<PeopleStates> {
         resetPeoplePage();
         emit(const PeopleStates.loading());
       } else {
-        _pagination = _pagination.copyWith(
-          currentPage: _pagination.currentPage + 1,
-        );
         emit(
           PeopleStates.success(
             PeopleModel(results: _peopleResult),
@@ -37,33 +39,35 @@ class PeopleCubit extends Cubit<PeopleStates> {
         );
       }
 
-      final response = await _peopleRepository.getPeople(
-        _pagination.currentPage + 1,
-      ); // 1-based
+      final nextPage = isNextPage ? _pagination.currentPage + 1 : 1;
+
+      final response = await _peopleRepository.getPeople(nextPage);
 
       await response.when(
         success: (data) async {
-          if (data.results != null && data.results!.isNotEmpty) {
-            if (_pagination.currentPage == 0) {
+          if (data.results != null && (data.results?.isNotEmpty ?? false)) {
+            if (!isNextPage) {
               _peopleResult.clear();
+              _pagination = _pagination.copyWith(currentPage: 1);
+            } else {
+              _pagination = _pagination.copyWith(
+                currentPage: _pagination.currentPage + 1,
+              );
             }
 
-            _pagination = _pagination.copyWith(
-              totalPages: data.page ?? _pagination.totalPages,
-            );
+            final estimatedTotalPages = data.totalPages;
 
-            _peopleResult.addAll(data.results!);
+            _pagination = _pagination.copyWith(totalPages: estimatedTotalPages);
+
+            _peopleResult.addAll(data.results ?? []);
 
             emit(
               PeopleStates.success(
-                PeopleModel(
-                  results: _peopleResult,
-                  page: _pagination.totalPages,
-                ),
+                PeopleModel(results: List.from(_peopleResult), page: data.page),
                 isLoadingMore: false,
               ),
             );
-          } else if (_pagination.currentPage == 0) {
+          } else if (!isNextPage) {
             emit(const PeopleStates.emptyInput());
           }
         },
@@ -71,8 +75,8 @@ class PeopleCubit extends Cubit<PeopleStates> {
           emit(PeopleStates.error(message: error.toString()));
         },
       );
-    } catch (_) {
-      emit(PeopleStates.error(message: 'some_error'));
+    } catch (e) {
+      emit(PeopleStates.error(message: 'An unexpected error occurred: $e'));
     } finally {
       _pagination = _pagination.copyWith(isLoading: false);
     }
@@ -81,5 +85,10 @@ class PeopleCubit extends Cubit<PeopleStates> {
   void resetPeoplePage() {
     _pagination = const PaginationState();
     _peopleResult.clear();
+  }
+
+  void refresh() {
+    resetPeoplePage();
+    getPeople();
   }
 }

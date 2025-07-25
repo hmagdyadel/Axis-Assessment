@@ -4,13 +4,13 @@ class PaginationState {
   final bool isLoading;
 
   const PaginationState({
-    this.currentPage = 0,
+    this.currentPage = 1,
     this.totalPages = 1,
     this.isLoading = false,
   });
 
   /// Check if there are more pages
-  bool get hasMore => currentPage < totalPages - 1;
+  bool get hasMore => currentPage < totalPages;
 
   PaginationState copyWith({
     int? currentPage,

@@ -6,10 +6,16 @@ part 'people_model.g.dart';
 class PeopleModel {
   final int? page;
   final List<PersonResult>? results;
+  @JsonKey(name: 'total_results')
+  final int? totalResults;
+  @JsonKey(name: 'total_pages')
+  final int? totalPages;
 
   PeopleModel({
     this.page,
     this.results,
+    this.totalResults,
+    this.totalPages,
   });
 
   factory PeopleModel.fromJson(Map<String, dynamic> json) =>

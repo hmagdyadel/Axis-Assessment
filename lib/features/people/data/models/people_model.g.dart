@@ -11,10 +11,17 @@ PeopleModel _$PeopleModelFromJson(Map<String, dynamic> json) => PeopleModel(
   results: (json['results'] as List<dynamic>?)
       ?.map((e) => PersonResult.fromJson(e as Map<String, dynamic>))
       .toList(),
+  totalResults: (json['total_results'] as num?)?.toInt(),
+  totalPages: (json['total_pages'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$PeopleModelToJson(PeopleModel instance) =>
-    <String, dynamic>{'page': instance.page, 'results': instance.results};
+    <String, dynamic>{
+      'page': instance.page,
+      'results': instance.results,
+      'total_results': instance.totalResults,
+      'total_pages': instance.totalPages,
+    };
 
 PersonResult _$PersonResultFromJson(Map<String, dynamic> json) => PersonResult(
   adult: json['adult'] as bool?,

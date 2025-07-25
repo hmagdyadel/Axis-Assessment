@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'core/di/dependency_injection.dart';
-import 'features/people/presentations/views/people_view.dart';
-
-
+import 'core/routing/app_router.dart';
+import 'core/routing/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +20,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Axis Assessment',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-      home: const PeopleView(),
+      onGenerateRoute: AppRouter().generateRoute,
+      initialRoute: Routes.peopleScreen,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
     );
   }
 }
-
-
