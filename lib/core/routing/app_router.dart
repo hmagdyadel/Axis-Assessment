@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/people/presentations/cubit/people_cubit.dart';
 import '../../features/people/presentations/views/people_view.dart';
+import '../../features/people/presentations/views/person_details_view.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
-    // final arguments = settings.arguments;
+    final arguments = settings.arguments;
 
     switch (settings.name) {
       case Routes.peopleScreen:
@@ -18,6 +19,15 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<PeopleCubit>(),
             child: const PeopleView(),
+          ),
+        );
+
+      case Routes.personDetailsScreen:
+        final personId = arguments as int;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<PeopleCubit>(),
+            child: PersonDetailsView(personId: personId),
           ),
         );
 

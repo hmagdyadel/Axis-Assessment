@@ -11,6 +11,6 @@ class PeopleStates<T> with _$PeopleStates<T> {
       T response, {
         @Default(false) bool isLoadingMore,
       }) = SuccessPeopleStates;
-  const factory PeopleStates.successPeopleDetails(T data)=SuccessPeopleDetailsStates<T>;
+  const factory PeopleStates.successPersonDetails(T data)=SuccessPersonDetailsStates<T>;
   const factory PeopleStates.error({required String message}) = ErrorPeopleStates;
 }

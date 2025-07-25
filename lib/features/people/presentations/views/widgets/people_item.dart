@@ -2,16 +2,14 @@ import 'package:axis_assessment/core/const/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/utils/app_text_styles.dart';
 import '../../../data/models/people_model.dart';
 
 class PeopleFeaturedItem extends StatelessWidget {
   final PersonResult person;
 
-  const PeopleFeaturedItem({
-    super.key,
-    required this.person,
-  });
+  const PeopleFeaturedItem({super.key, required this.person});
 
   String _getProfileImageUrl() {
     if (person.profilePath != null && person.profilePath!.isNotEmpty) {
@@ -23,9 +21,13 @@ class PeopleFeaturedItem extends StatelessWidget {
   String _getKnownForText() {
     if (person.knownFor != null && person.knownFor!.isNotEmpty) {
       // Get the first 2-3 known for items
-      final items = person.knownFor!.take(3).map((item) {
-        return item.title ?? item.name ?? '';
-      }).where((title) => title.isNotEmpty).toList();
+      final items = person.knownFor!
+          .take(3)
+          .map((item) {
+            return item.title ?? item.name ?? '';
+          })
+          .where((title) => title.isNotEmpty)
+          .toList();
 
       if (items.isNotEmpty) {
         return items.join(', ');
@@ -43,8 +45,8 @@ class PeopleFeaturedItem extends StatelessWidget {
     return Container(
       width: width - 32,
       margin: const EdgeInsets.symmetric(
-          horizontal: horizontalPadding,
-          vertical: horizontalPadding / 2
+        horizontal: horizontalPadding,
+        vertical: horizontalPadding / 2,
       ),
       decoration: BoxDecoration(
         color: Colors.grey[900],
@@ -65,10 +67,7 @@ class PeopleFeaturedItem extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.grey[700]!,
-                  width: 2,
-                ),
+                border: Border.all(color: Colors.grey[700]!, width: 2),
               ),
               child: ClipOval(
                 child: SizedBox(
@@ -76,33 +75,33 @@ class PeopleFeaturedItem extends StatelessWidget {
                   height: 80,
                   child: profileImageUrl.isNotEmpty
                       ? CachedNetworkImage(
-                    imageUrl: profileImageUrl,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      color: Colors.grey[800],
-                      child: const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                        size: 40,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[800],
-                      child: const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                        size: 40,
-                      ),
-                    ),
-                  )
+                          imageUrl: profileImageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
+                            color: Colors.grey[800],
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                              size: 40,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.grey[800],
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                              size: 40,
+                            ),
+                          ),
+                        )
                       : Container(
-                    color: Colors.grey[800],
-                    child: const Icon(
-                      Icons.person,
-                      color: Colors.grey,
-                      size: 40,
-                    ),
-                  ),
+                          color: Colors.grey[800],
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.grey,
+                            size: 40,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -183,10 +182,21 @@ class PeopleFeaturedItem extends StatelessWidget {
             ),
 
             // Arrow Icon
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.grey[600],
-              size: 16,
+            GestureDetector(
+              onTap: () {
+
+                Navigator.pushNamed(
+                  context,
+                  Routes.personDetailsScreen,
+                  arguments: person.id ?? 0,
+                );
+
+              },
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey[600],
+                size: 16,
+              ),
             ),
           ],
         ),

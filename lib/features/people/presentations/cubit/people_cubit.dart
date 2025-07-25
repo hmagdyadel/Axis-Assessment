@@ -91,7 +91,7 @@ class PeopleCubit extends Cubit<PeopleStates> {
 
       response.when(
         success: (personDetails) async {
-          emit(PeopleStates.successPeopleDetails(personDetails));
+          emit(PeopleStates.successPersonDetails(personDetails));
         },
         failure: (error) {
           emit(PeopleStates.error(message: error.message));
