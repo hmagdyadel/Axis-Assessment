@@ -55,14 +55,15 @@ extension PeopleStatesPatterns<T> on PeopleStates<T> {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial<T> value)?  initial,TResult Function( LoadingPeopleStates<T> value)?  loading,TResult Function( EmptyPeopleStates<T> value)?  emptyInput,TResult Function( SuccessPeopleStates<T> value)?  success,TResult Function( ErrorPeopleStates<T> value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial<T> value)?  initial,TResult Function( LoadingPeopleStates<T> value)?  loading,TResult Function( EmptyPeopleStates<T> value)?  emptyInput,TResult Function( SuccessPeopleStates<T> value)?  success,TResult Function( SuccessPeopleDetailsStates<T> value)?  successPeopleDetails,TResult Function( ErrorPeopleStates<T> value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case LoadingPeopleStates() when loading != null:
 return loading(_that);case EmptyPeopleStates() when emptyInput != null:
 return emptyInput(_that);case SuccessPeopleStates() when success != null:
-return success(_that);case ErrorPeopleStates() when error != null:
+return success(_that);case SuccessPeopleDetailsStates() when successPeopleDetails != null:
+return successPeopleDetails(_that);case ErrorPeopleStates() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -81,14 +82,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial<T> value)  initial,required TResult Function( LoadingPeopleStates<T> value)  loading,required TResult Function( EmptyPeopleStates<T> value)  emptyInput,required TResult Function( SuccessPeopleStates<T> value)  success,required TResult Function( ErrorPeopleStates<T> value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial<T> value)  initial,required TResult Function( LoadingPeopleStates<T> value)  loading,required TResult Function( EmptyPeopleStates<T> value)  emptyInput,required TResult Function( SuccessPeopleStates<T> value)  success,required TResult Function( SuccessPeopleDetailsStates<T> value)  successPeopleDetails,required TResult Function( ErrorPeopleStates<T> value)  error,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case LoadingPeopleStates():
 return loading(_that);case EmptyPeopleStates():
 return emptyInput(_that);case SuccessPeopleStates():
-return success(_that);case ErrorPeopleStates():
+return success(_that);case SuccessPeopleDetailsStates():
+return successPeopleDetails(_that);case ErrorPeopleStates():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -106,14 +108,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial<T> value)?  initial,TResult? Function( LoadingPeopleStates<T> value)?  loading,TResult? Function( EmptyPeopleStates<T> value)?  emptyInput,TResult? Function( SuccessPeopleStates<T> value)?  success,TResult? Function( ErrorPeopleStates<T> value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial<T> value)?  initial,TResult? Function( LoadingPeopleStates<T> value)?  loading,TResult? Function( EmptyPeopleStates<T> value)?  emptyInput,TResult? Function( SuccessPeopleStates<T> value)?  success,TResult? Function( SuccessPeopleDetailsStates<T> value)?  successPeopleDetails,TResult? Function( ErrorPeopleStates<T> value)?  error,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case LoadingPeopleStates() when loading != null:
 return loading(_that);case EmptyPeopleStates() when emptyInput != null:
 return emptyInput(_that);case SuccessPeopleStates() when success != null:
-return success(_that);case ErrorPeopleStates() when error != null:
+return success(_that);case SuccessPeopleDetailsStates() when successPeopleDetails != null:
+return successPeopleDetails(_that);case ErrorPeopleStates() when error != null:
 return error(_that);case _:
   return null;
 
@@ -131,13 +134,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  emptyInput,TResult Function( T response,  bool isLoadingMore)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  emptyInput,TResult Function( T response,  bool isLoadingMore)?  success,TResult Function( T data)?  successPeopleDetails,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case LoadingPeopleStates() when loading != null:
 return loading();case EmptyPeopleStates() when emptyInput != null:
 return emptyInput();case SuccessPeopleStates() when success != null:
-return success(_that.response,_that.isLoadingMore);case ErrorPeopleStates() when error != null:
+return success(_that.response,_that.isLoadingMore);case SuccessPeopleDetailsStates() when successPeopleDetails != null:
+return successPeopleDetails(_that.data);case ErrorPeopleStates() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -156,13 +160,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  emptyInput,required TResult Function( T response,  bool isLoadingMore)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  emptyInput,required TResult Function( T response,  bool isLoadingMore)  success,required TResult Function( T data)  successPeopleDetails,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case LoadingPeopleStates():
 return loading();case EmptyPeopleStates():
 return emptyInput();case SuccessPeopleStates():
-return success(_that.response,_that.isLoadingMore);case ErrorPeopleStates():
+return success(_that.response,_that.isLoadingMore);case SuccessPeopleDetailsStates():
+return successPeopleDetails(_that.data);case ErrorPeopleStates():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -180,13 +185,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  emptyInput,TResult? Function( T response,  bool isLoadingMore)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  emptyInput,TResult? Function( T response,  bool isLoadingMore)?  success,TResult? Function( T data)?  successPeopleDetails,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case LoadingPeopleStates() when loading != null:
 return loading();case EmptyPeopleStates() when emptyInput != null:
 return emptyInput();case SuccessPeopleStates() when success != null:
-return success(_that.response,_that.isLoadingMore);case ErrorPeopleStates() when error != null:
+return success(_that.response,_that.isLoadingMore);case SuccessPeopleDetailsStates() when successPeopleDetails != null:
+return successPeopleDetails(_that.data);case ErrorPeopleStates() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -353,6 +359,72 @@ class _$SuccessPeopleStatesCopyWithImpl<T,$Res>
 freezed == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
 as T,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
 as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SuccessPeopleDetailsStates<T> implements PeopleStates<T> {
+  const SuccessPeopleDetailsStates(this.data);
+  
+
+ final  T data;
+
+/// Create a copy of PeopleStates
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SuccessPeopleDetailsStatesCopyWith<T, SuccessPeopleDetailsStates<T>> get copyWith => _$SuccessPeopleDetailsStatesCopyWithImpl<T, SuccessPeopleDetailsStates<T>>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SuccessPeopleDetailsStates<T>&&const DeepCollectionEquality().equals(other.data, data));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
+
+@override
+String toString() {
+  return 'PeopleStates<$T>.successPeopleDetails(data: $data)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SuccessPeopleDetailsStatesCopyWith<T,$Res> implements $PeopleStatesCopyWith<T, $Res> {
+  factory $SuccessPeopleDetailsStatesCopyWith(SuccessPeopleDetailsStates<T> value, $Res Function(SuccessPeopleDetailsStates<T>) _then) = _$SuccessPeopleDetailsStatesCopyWithImpl;
+@useResult
+$Res call({
+ T data
+});
+
+
+
+
+}
+/// @nodoc
+class _$SuccessPeopleDetailsStatesCopyWithImpl<T,$Res>
+    implements $SuccessPeopleDetailsStatesCopyWith<T, $Res> {
+  _$SuccessPeopleDetailsStatesCopyWithImpl(this._self, this._then);
+
+  final SuccessPeopleDetailsStates<T> _self;
+  final $Res Function(SuccessPeopleDetailsStates<T>) _then;
+
+/// Create a copy of PeopleStates
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? data = freezed,}) {
+  return _then(SuccessPeopleDetailsStates<T>(
+freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as T,
   ));
 }
 

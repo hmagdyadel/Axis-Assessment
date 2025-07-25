@@ -97,14 +97,15 @@ class _PeopleViewState extends State<PeopleView> {
   Widget _buildPeopleList() {
     return Expanded(
       child: BlocBuilder<PeopleCubit, PeopleStates>(
-        builder: (context, state) => state.when(
+        builder: (context, state) => state.whenOrNull(
           initial: () => _buildLoadingSkeletons(),
           loading: () => _buildLoadingSkeletons(),
           emptyInput: () => _buildEmptyState(),
           success: (peopleModel, isLoadingMore) =>
               _buildSuccessState(peopleModel, isLoadingMore),
           error: (message) => _buildErrorState(),
-        ),
+        )?? _buildLoadingSkeletons(),
+
       ),
     );
   }

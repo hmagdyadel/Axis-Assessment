@@ -82,6 +82,26 @@ class PeopleCubit extends Cubit<PeopleStates> {
     }
   }
 
+  //  function for getting person details
+  Future<void> getPersonDetails({required int personId}) async {
+    try {
+      emit(const PeopleStates.loading());
+
+      final response = await _peopleRepository.getPeopleDetails(personId);
+
+      response.when(
+        success: (personDetails) async {
+          emit(PeopleStates.successPeopleDetails(personDetails));
+        },
+        failure: (error) {
+          emit(PeopleStates.error(message: error.message));
+        },
+      );
+    } catch (e) {
+      emit(PeopleStates.error(message: 'Failed to load person details: $e'));
+    }
+  }
+
   void resetPeoplePage() {
     _pagination = const PaginationState();
     _peopleResult.clear();
