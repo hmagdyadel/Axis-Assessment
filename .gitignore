@@ -45,6 +45,12 @@ app.*.map.json
 /android/app/release
 
 
+
+---
+
+### ✅ `.gitignore` — Comment the `.env` line with a clear explanation:
+
+```gitignore
 # Environment secrets
-# will remove .env from .gitignore for testing purposes
+# .env file is currently tracked for testing purposes — remove before production
 #.env

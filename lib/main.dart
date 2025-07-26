@@ -5,13 +5,17 @@ import 'core/di/dependency_injection.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 
+import 'core/services/hive_service.dart';
 import 'core/services/network_connection_service.dart';
 import 'core/widgets/network_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+
+  // Initialize services
   await NetworkConnectivityService.instance.initialize();
+  await HiveService.instance.initialize();
 
   setupGetIt();
   runApp(const MyApp());
