@@ -5,9 +5,14 @@ import 'core/di/dependency_injection.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 
+import 'core/services/network_connection_service.dart';
+import 'core/widgets/network_wrapper.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await NetworkConnectivityService.instance.initialize();
+
   setupGetIt();
   runApp(const MyApp());
 }
@@ -25,6 +30,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      builder: (context, child) {
+        return NetworkWrapper(child: child!);
+      },
     );
   }
 }
