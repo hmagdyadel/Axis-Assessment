@@ -1,7 +1,6 @@
 import 'package:axis_assessment/core/networking/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gal/gal.dart';
-import 'package:http/http.dart' as http;
+
 
 import '../../data/models/people_model.dart';
 import '../../domain/repository/people_repository.dart';
