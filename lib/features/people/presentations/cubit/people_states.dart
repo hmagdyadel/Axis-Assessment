@@ -7,6 +7,7 @@ class PeopleStates<T> with _$PeopleStates<T> {
   const factory PeopleStates.initial() = _Initial;
   const factory PeopleStates.loading() = LoadingPeopleStates;
   const factory PeopleStates.emptyInput() = EmptyPeopleStates;
+
   const factory PeopleStates.success(
       T response, {
         @Default(false) bool isLoadingMore,

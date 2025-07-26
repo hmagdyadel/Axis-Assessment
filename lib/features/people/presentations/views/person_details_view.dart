@@ -5,6 +5,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/const/constants.dart';
 import '../../../../core/utils/app_text_styles.dart';
+import '../../../../core/routing/routes.dart';
+import '../../data/models/image_viewer_args.dart';
 import '../../data/models/person_details_model.dart';
 import '../cubit/people_cubit.dart';
 import '../cubit/people_states.dart';
@@ -163,55 +165,85 @@ class _PersonDetailsViewState extends State<PersonDetailsView> {
         ? 'https://image.tmdb.org/t/p/w500${personDetails.profilePath}'
         : '';
 
+    final originalImageUrl = personDetails.profilePath != null
+        ? 'https://image.tmdb.org/t/p/original${personDetails.profilePath}'
+        : '';
+
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
       backgroundColor: Colors.transparent,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
-      flexibleSpace: FlexibleSpaceBar(
-        background: Stack(
-          fit: StackFit.expand,
-          children: [
-            profileImageUrl.isNotEmpty
-                ? CachedNetworkImage(
-                    imageUrl: profileImageUrl,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
+      flexibleSpace: GestureDetector(
+        onTap: () {
+          debugPrint("originalImageUrl $originalImageUrl");
+          _openImageViewer(originalImageUrl, personDetails.name);
+        },
+        child: FlexibleSpaceBar(
+          background: Stack(
+            fit: StackFit.expand,
+            children: [
+              profileImageUrl.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: profileImageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[800],
+                        child: const Center(
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.grey,
+                            size: 80,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[800],
+                        child: const Center(
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.grey,
+                            size: 80,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(
                       color: Colors.grey[800],
                       child: const Center(
                         child: Icon(Icons.person, color: Colors.grey, size: 80),
                       ),
                     ),
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[800],
-                      child: const Center(
-                        child: Icon(Icons.person, color: Colors.grey, size: 80),
-                      ),
-                    ),
-                  )
-                : Container(
-                    color: Colors.grey[800],
-                    child: const Center(
-                      child: Icon(Icons.person, color: Colors.grey, size: 80),
-                    ),
+              // Gradient overlay
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, Colors.black.withAlpha(178)],
                   ),
-            // Gradient overlay
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, Colors.black.withAlpha(178)],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void _openImageViewer(String imageUrl, String? personName) {
+    if (imageUrl.isNotEmpty) {
+      ImageViewerArgs args = ImageViewerArgs(
+        imageUrl: imageUrl,
+        personName: personName,
+      );
+      Navigator.pushNamed(context, Routes.imageViewerScreen, arguments: args);
+    }
   }
 
   Widget _buildPersonInfo(PersonDetailsModel personDetails) {

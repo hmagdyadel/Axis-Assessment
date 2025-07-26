@@ -3,7 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/image_download/presentations/cubit/image_download_cubit.dart';
+import '../../features/people/data/models/image_viewer_args.dart';
 import '../../features/people/presentations/cubit/people_cubit.dart';
+import '../../features/image_download/presentations/views/image_view.dart';
 import '../../features/people/presentations/views/people_view.dart';
 import '../../features/people/presentations/views/person_details_view.dart';
 import '../di/dependency_injection.dart';
@@ -28,6 +31,18 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<PeopleCubit>(),
             child: PersonDetailsView(personId: personId),
+          ),
+        );
+
+      case Routes.imageViewerScreen:
+        final args = arguments as ImageViewerArgs;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ImageDownloadCubit>(),
+            child: ImageViewerScreen(
+              imageUrl: args.imageUrl,
+              personName: args.personName,
+            ),
           ),
         );
 

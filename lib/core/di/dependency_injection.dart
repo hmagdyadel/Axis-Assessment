@@ -2,6 +2,7 @@ import 'package:axis_assessment/features/people/data/repository/people_repositor
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/image_download/presentations/cubit/image_download_cubit.dart';
 import '../../features/people/domain/repository/people_repository.dart';
 import '../../features/people/presentations/cubit/people_cubit.dart';
 import '../networking/api_services.dart';
@@ -22,5 +23,10 @@ Future<void> setupGetIt() async {
   // People Cubit
   getIt.registerFactory<PeopleCubit>(
         () => PeopleCubit(getIt<PeopleRepository>()),
+  );
+
+// Image Download Cubit
+  getIt.registerFactory<ImageDownloadCubit>(
+        () => ImageDownloadCubit(),
   );
 }

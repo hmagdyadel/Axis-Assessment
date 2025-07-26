@@ -24,6 +24,9 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   get_it: ^8.0.3
   skeletonizer: ^2.1.0+1
+  permission_handler: ^12.0.1
+  gal: ^2.3.2
+  http: ^1.4.0
 
 
 dev_dependencies:
